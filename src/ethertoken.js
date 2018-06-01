@@ -11,7 +11,7 @@ class Ethertoken extends Component{
     }
 
     componentDidMount(){
-        fetch("http://api.ethplorer.io/getTopTokens?apiKey=freekey")
+        fetch("https://api.ethplorer.io/getTopTokens?apiKey=freekey")
             .then(
                 result => result.json()
             )
