@@ -35,17 +35,6 @@ class Ethertoken extends Component{
     }
     
     componentWillMount(){
-        /*
-        var tokenadd="0xec46f8207d766012454c408de210bcbc2243e71c"
-        fetch("http://api.etherscan.io/api?module=account&action=txlist&address="+tokenadd+"&startblock=0&endblock=99999999&sort=dec&apikey=Token")
-            .then(
-                result => result.json()
-            )
-            .then(
-                items => this.setState({items})
-            )
-            */
-           //get open sea data
            var hold=[]
         scrape("https://cors.io/?https://opensea.io/assets", {
             title: {
@@ -133,137 +122,9 @@ class Ethertoken extends Component{
         })
     }
     
-         render() {
-             var g=[];
-            /*for(var keyx in this.state.ordered){
-                g.push(this.state.ordered[keyx])
-             }*/
-             //console.log(this.state)
-             /*var stuff=[{
-                 index:[this.state.index],
-                 ordered:g
-             }
-             ]*/
-             //var stuff= this.state
-             //var stuff=JSON.parse(JSON.stringify(stuff)) 
-             
-             var stuff= this.state.complete
-             //stuff= stuff.map(g=>g.ordered)
-             //stuff.push({this.state.avg})
-             //stuff.push({this.state.index})
-            
-             //stuff=stuff.map()
-            //stuff=stuff.map((p,key) => p.index[key])
-             //console.log(this.state.ordered)
-             /*
-             var unordered= this.state.index
-             var ordered= this.state.ordered
-             var index2=[]
-             for(var z in ordered){
-                 console.log(z)
-                 var temp = ordered[z]
-                 var num=unordered.indexOf(temp)
-                //console.log(unordered[num])
-                index2.push(unordered[num])
-             }
-             console.log(index2)*/
-             //console.log(index2)
-             //console.log(index2)
-            //rows.push(<li>{ethertokens}</li>)
-           /*
-            for(var i=1; i<12; i++){
-            scrape("https://cors.io/?https://etherscan.io/tokens?p=" + i, {
-                title: {
-                    listItem:".hidden-xs h5 "
-                    ,name:"title"
-                    ,data:{
-                        name:"a",
-                        txn:{
-                            selector:"a",
-                            attr:"href"
-                        }
-                    }
-                }
-            }).then(({ data, response }) => {
-                console.log(`Status Code: ${response.statusCode}`)
-                var count =data.title.length
-                for(var i = 0; i< count; i++ ){
-                    console.log(data.title[i.toString()].txn.split(/\W/)[2])
-                    console.log(data.title[i.toString()].name)
-                }
-            })
-        }
-        console.log(this.state.items) */
-        /** var web3 = new Web3(new Web3.providers.HttpProvider("https://api.myetherapi.com/eth"));
-        var info =web3.eth.getBlock("latest");
-        console.log(JSON.stringify(info));
-        web3.eth.getBlock("latest", function(error, result){
-            if(!error)
-                console.log(JSON.stringify(result));
-            else
-                console.error(error);
-        }) 
-        web3.eth.getTransactionReceipt('0x44fd65a70b4ac20e6b59c10692b5d411c636a318afe33362d0c1214a2ede4e66', function(error, result){
-            if(!error)
-                console.log(JSON.stringify(result));
-            else
-                console.error(error);
-        }) **/
-        //console.log(this.state.erc721)
-        
-        
-        /*
-        var rows= ["Names"]
-        var estimate= ["estimate"]
-        var averagePrice=["Average Price"]
-        var thisWeek= ["This Week"]
-        var total=["total"]
-        var tokens=["tokens"]
-        var erc721= this.state.erc721
-        for(var key in erc721){
-            var ercdata=erc721[key]
-        }
-        var prac=[]
-        var market=[]
-        for (var i in ercdata){
-            var ethertokens=ercdata[i].replace(/\d+/,'')
-            rows.push(<li>{ethertokens}</li>)
-            var ercurl= ethertokens.replace(/\s/g,"").toLowerCase()
-            prac.push(ercurl)                        
-        };
+        render() { 
+        var stuff= this.state.complete
 
-        for(var j in prac){
-            scrape("https://cors.io/?https://opensea.io/recent/" + prac[j],{
-                title:{
-                    listItem:".CategoryMenu p",
-                    data:{
-                        Parameter: "strong",
-                        amount:".right"
-                    }
-                }
-            }).then(({data,response}) =>{
-                console.log(`Status Code: ${response.statusCode}`)
-                data.title.splice(0,1)
-                console.log(data.title[0].amount)
-                //console.log(data.title)
-               return( market.push(data.title[0].amount))
-            }).catch((err)=>{
-                console.log("fuck")
-            })
-        };
-        */     
-    
-
-        /** 
-        for(var key in tokens) {
-            //console.log(tokens.result[0])
-
-            console.log(tokens.length)
-            rows.push(<li>{tokens[key].name}</li>)
-            txs.push(<li>{tokens[key].txsCount}</li>)
-            holders.push(<li>{tokens[key].holdersCount}</li>)
-            totalSupply.push(<li>{tokens[key].totalSupply} </li>)
-        } **/
         return(
         <div className="App">
         <header className="App-header">
@@ -303,18 +164,5 @@ class Ethertoken extends Component{
         </div>
         )
     }
-  /**  render() {
-        var tokens= this.state.items.map(currency =>
-            <li key={currency.tokens.symbol}> </li>
-        );
-        return(
-            <div className="App">
-                <li>
-                    {tokens}
-                </li>
-            </div>
-        );
-
-    } **/
 }
 export default Ethertoken;
