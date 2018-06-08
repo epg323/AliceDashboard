@@ -4,6 +4,7 @@ import ReactTable from "react-table";
 import './App.css';
 import Web3 from "web3";
 import scrape from "scrape-it";
+import "react-table/react-table.css";
 
 class Ethertoken extends Component{
     constructor(props){
@@ -19,8 +20,8 @@ class Ethertoken extends Component{
             avg:[],
             wk:[],
             total:[],
-            tokens:[]
-        
+            tokens:[],
+            complete:[]        
         };
 
 
@@ -65,6 +66,7 @@ class Ethertoken extends Component{
             var total=["Volume Total"]
             var tokens=["tokens"]
             var indx=["Names"]
+            var comp=[]
             var erc721= data
             for(var key in erc721){
                 var ercdata=erc721[key]
@@ -73,7 +75,7 @@ class Ethertoken extends Component{
             var market=[]
             for (var i in ercdata){
                 var ethertokens=ercdata[i].replace(/\d+/,'')
-                rows.push(<li>{ethertokens}</li>)
+                rows.push(ethertokens)
                 var ercurl= ethertokens.replace(/\s/g,"").toLowerCase()
                 prac.push(ercurl)                        
             };
@@ -93,26 +95,37 @@ class Ethertoken extends Component{
                         }
                     }
                 }).then(({data,response}) =>{
-                    console.log(`Status Code: ${response.statusCode}`)
+                    //console.log(`Status Code: ${response.statusCode}`)
                     data.title.splice(0,1)
                     this.setState({
                         info:data.title[0].amount
                     })
                     //console.log(data.title[4])
                     var names= response.responseUrl.split("/")[7]
-                    indx.push(<li>{names}</li>)
+                    indx.push(names)
+                    console.log(parseFloat(data.title[0].amount.replace("㆔","")))
                     estimate.push(<li>{data.title[0].amount}</li>)
-                    averagePrice.push(<li>{data.title[1].amount}</li>)
+                    averagePrice.push(data.title[1].amount)
                     thisWeek.push(<li>{data.title[2].amount}</li>)
                     total.push(<li>{data.title[3].amount}</li>)
                     tokens.push(<li>{data.title[4].amount}</li>)
+                    var temp= {
+                        index:names,
+                        estimate:parseFloat(data.title[0].amount.replace("㆔","")),
+                        avg:parseFloat(data.title[1].amount.replace("㆔","")),
+                        wkvol:parseFloat(data.title[2].amount.replace("㆔","")),
+                        totvol:parseFloat(data.title[3].amount.replace("㆔","")),
+                        tokens:parseFloat(data.title[4].amount.replace("㆔",""))
+                    }
+                    comp.push(temp)
                 },this.setState({
                     index:indx,
                     stuff:estimate,
                     avg:averagePrice,
                     wk:thisWeek,
                     total: total,
-                    tokens:tokens
+                    tokens:tokens,
+                    complete:comp
                 })).catch((err)=>{
                     console.log("fuck")
                 })
@@ -121,6 +134,26 @@ class Ethertoken extends Component{
     }
     
          render() {
+             var g=[];
+            /*for(var keyx in this.state.ordered){
+                g.push(this.state.ordered[keyx])
+             }*/
+             //console.log(this.state)
+             /*var stuff=[{
+                 index:[this.state.index],
+                 ordered:g
+             }
+             ]*/
+             //var stuff= this.state
+             //var stuff=JSON.parse(JSON.stringify(stuff)) 
+             
+             var stuff= this.state.complete
+             //stuff= stuff.map(g=>g.ordered)
+             //stuff.push({this.state.avg})
+             //stuff.push({this.state.index})
+            
+             //stuff=stuff.map()
+            //stuff=stuff.map((p,key) => p.index[key])
              //console.log(this.state.ordered)
              /*
              var unordered= this.state.index
@@ -237,13 +270,35 @@ class Ethertoken extends Component{
         <img src={logo} className="App-logo" alt="logo" />
         <h1 className="App-title">Welcome to Alice in Wonderland</h1>
         </header>
-        <div class="table-container">
-        <li>{this.state.index}</li>
-        <li>{this.state.stuff}</li>
-        <li>{this.state.avg}</li>
-        <li>{this.state.wk}</li>
-        <li>{this.state.total}</li>
-        <li>{this.state.tokens}</li>
+        <div>
+            <ReactTable
+                data={stuff}
+                columns={[{
+                    columns:[
+                    {
+                        Header:"Name",
+                        accessor:"index"
+                    },{
+                        Header:"Estimate",
+                        accessor:"estimate" 
+                    },{
+                        Header:"Average Volume",
+                        accessor:"avg" 
+                    },{
+                        Header:"Week Volume",
+                        accessor:"wkvol" 
+                    },{
+                        Header:"Total Volume",
+                        accessor:"totvol" 
+                    },{
+                        Header:"Tokens",
+                        accessor:"tokens" 
+                    }
+                ]
+                }
+                ]}
+                className="-striped"
+             />
         </div>
         </div>
         )
